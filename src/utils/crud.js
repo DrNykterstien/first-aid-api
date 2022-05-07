@@ -17,6 +17,37 @@ const createOne = async (model, data) => {
   }
 };
 
+const deleteOne = async (model, where) => {
+  try {
+    const removed = await model.findOneAndRemove({
+      ...where
+    });
+    if (!removed) {
+      return {
+        data: null,
+        success: false,
+        code: 404,
+        message: 'Not Found'
+      };
+    }
+
+    return {
+      data: true,
+      success: true,
+      code: 200,
+      message: 'Operation done successfully'
+    };
+  } catch (error) {
+    return {
+      data: null,
+      success: false,
+      code: 400,
+      message: error.message
+    };
+  }
+};
+
 module.exports = {
-  createOne
+  createOne,
+  deleteOne
 };
