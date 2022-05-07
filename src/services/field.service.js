@@ -1,4 +1,4 @@
-const { createOne, deleteOne, getOne } = require('../utils/crud');
+const { createOne, deleteOne, getOne, getMany } = require('../utils/crud');
 const FieldModel = require('../models/field.model');
 
 const createField = field => {
@@ -40,8 +40,24 @@ const getField = id => {
   }
 };
 
+const getFields = partial => {
+  try {
+    let fields = { title: 1, icon: 1, rank: 1 };
+    if (partial == 'full') fields = {};
+    return getMany(FieldModel, {}, fields, { rank: 1 });
+  } catch {
+    return {
+      data: null,
+      success: false,
+      code: 500,
+      message: 'Internal Server Error'
+    };
+  }
+};
+
 module.exports = {
   createField,
   deleteField,
-  getField
+  getField,
+  getFields
 };

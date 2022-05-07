@@ -1,6 +1,6 @@
 //** --------------------- API  --------------------- */
 
-const { createField, deleteField, getField } = require('../services/field.service');
+const { createField, deleteField, getField, getFields } = require('../services/field.service');
 
 const createFieldController = async (req, res) => {
   const input = req.body;
@@ -20,8 +20,15 @@ const getFieldController = async (req, res) => {
   res.status(data.code).json(data);
 };
 
+const getFieldsController = async (req, res) => {
+  const { partial } = req.query;
+  const data = await getFields(partial);
+  res.status(data.code).json(data);
+};
+
 module.exports = {
   createFieldController,
   deleteFieldController,
-  getFieldController
+  getFieldController,
+  getFieldsController
 };
