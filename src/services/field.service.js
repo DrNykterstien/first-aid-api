@@ -1,4 +1,4 @@
-const { createOne, deleteOne } = require('../utils/crud');
+const { createOne, deleteOne, getOne } = require('../utils/crud');
 const FieldModel = require('../models/field.model');
 
 const createField = field => {
@@ -27,7 +27,21 @@ const deleteField = id => {
   }
 };
 
+const getField = id => {
+  try {
+    return getOne(FieldModel, { _id: id });
+  } catch {
+    return {
+      data: null,
+      success: false,
+      code: 500,
+      message: 'Internal Server Error'
+    };
+  }
+};
+
 module.exports = {
   createField,
-  deleteField
+  deleteField,
+  getField
 };

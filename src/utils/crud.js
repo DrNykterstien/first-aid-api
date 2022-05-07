@@ -47,7 +47,40 @@ const deleteOne = async (model, where) => {
   }
 };
 
+const getOne = async (model, where = {}, fields = {}) => {
+  try {
+    const doc = await model
+      .findOne({ ...where })
+      .select({ ...fields })
+      .lean()
+      .exec();
+
+    if (!doc) {
+      return {
+        data: null,
+        success: false,
+        code: 404,
+        message: 'Not Found'
+      };
+    }
+    return {
+      data: doc,
+      success: true,
+      code: 200,
+      message: 'Operation done successfully'
+    };
+  } catch (error) {
+    return {
+      data: null,
+      success: false,
+      code: 404,
+      message: error.message
+    };
+  }
+};
+
 module.exports = {
   createOne,
-  deleteOne
+  deleteOne,
+  getOne
 };
