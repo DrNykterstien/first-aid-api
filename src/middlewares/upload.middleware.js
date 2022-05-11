@@ -8,12 +8,11 @@ const nameFile = originalname => {
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const dist = path.join(__dirname, '../../public/uploads/');
+    const dist = path.join(__dirname, `../../public/uploads/${file.fieldname}`);
     cb(null, dist);
   },
   filename: (req, file, cb) => {
-    console.log(nameFile(file.originalname));
-    cb(null, nameFile(file.originalname));
+    cb(null, file.originalname);
   }
 });
 
